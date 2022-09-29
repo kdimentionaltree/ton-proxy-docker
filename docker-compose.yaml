@@ -1,0 +1,12 @@
+version: '3.9'
+services:
+  rldp-proxy:
+    image: localhost:5000/rldp-proxy:latest
+    build:
+      dockerfile: Dockerfile
+      context: rldp-proxy
+    # ports:
+    #   - 6565:6565
+    #   - 3333:3333
+    network_mode: host
+    command: /app/rldp-http-proxy -p 6565 -c 3333 -C /app/global.config.json
