@@ -1,5 +1,9 @@
 version: '3.9'
 services:
+  nginx:
+    image: nginx:latest
+    networks:
+      - ton-proxy-network
   rldp-proxy:
     image: rldp-http-proxy:latest
     build:
@@ -7,7 +11,11 @@ services:
       context: rldp-http-proxy
       args:
         TON_REPO_BRANCH: testnet
-    network_mode: host
+    ports:
+      - ${TON_PROXY_PORT}:${TON_PROXY_PORT}
+      - ${TON_PROXY_ADNL_PORT}:${TON_PROXY_ADNL_PORT}
+    networks:
+      - ton-proxy-network
     environment:
       - TON_PROXY_PORT
       - TON_PROXY_SERVER_IP
@@ -26,3 +34,6 @@ secrets:
     file: private/adnl-private
   global-config:
     file: private/global.config.json
+networks:
+  ton-proxy-network:
+    external: true
