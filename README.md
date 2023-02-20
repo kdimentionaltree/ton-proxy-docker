@@ -1,6 +1,9 @@
 # TON Proxy Docker
 This repository allows you easily run [rldp-http-proxy](https://ton.org/docs/#/web3/sites-and-proxy?id=running-ton-site) to deploy your site in TON network. The **rldp-http-proxy** is running in Docker container with `network_mode=host`.
 
+## Hardware requirements
+* At least 2 GB RAM for build TON binaries.
+
 ## Running proxy:
 * Set ton repo branch in docker-compose file section `rldp-proxy.build.args`.
 * Build image: `docker-compose build`.
