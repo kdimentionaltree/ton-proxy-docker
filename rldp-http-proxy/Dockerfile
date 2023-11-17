@@ -29,7 +29,7 @@ FROM ubuntu:20.04
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get -y install tzdata
 
-RUN apt install -y openssl libssl-dev wget curl libatomic1 zlib1g-dev gperf wget git curl libreadline-dev ccache libmicrohttpd-dev
+RUN apt install -y openssl libssl-dev wget curl libatomic1 zlib1g-dev gperf wget git curl libreadline-dev ccache libmicrohttpd-dev dnsutils
 WORKDIR /app
 
 COPY --from=builder /ton/build/rldp-http-proxy/rldp-http-proxy /app/rldp-http-proxy

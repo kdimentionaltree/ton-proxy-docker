@@ -1,0 +1,43 @@
+version: '3.9'
+services:
+  rldp-proxy:
+    image: localhost:5000/rldp-http-proxy:latest
+    build:
+      dockerfile: Dockerfile
+      context: rldp-http-proxy
+      args:
+        TON_REPO_BRANCH: testnet
+    ports:
+      - 8080:8080
+      - 3333:3333
+    environment:
+      - TON_PROXY_PORT=8080
+      - TON_PROXY_SERVER_IP=116.202.116.162
+      - TON_PROXY_ADNL_PORT=3333
+      # - TON_PROXY_REMOTE_ADDR="home-page:81"
+      - TON_PROXY_REMOTE_HOST=home-page
+      - TON_PROXY_REMOTE_PORT=80
+      - TON_PROXY_VERBOSITY=3
+      - TON_PROXY_PROXY_ALL=NO
+    command: /app/entrypoint.sh
+    secrets: [ adnl, adnl-hex, adnl-private, global-config ]
+    networks:
+      - toncenter-network
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - "node.hostname==hetzner-02"
+secrets:
+  adnl:
+    file: private/adnl
+  adnl-hex:
+    file: private/adnl-hex
+  adnl-private:
+    file: private/adnl-private
+  global-config:
+    file: private/global.config.json
+networks:
+  toncenter-network:
+    external: true

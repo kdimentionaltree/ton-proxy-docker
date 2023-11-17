@@ -9,6 +9,7 @@ services:
       args:
         TON_REPO_BRANCH: testnet
     network_mode: host
+    restart: always
     environment:
       - TON_PROXY_PORT
       - TON_PROXY_SERVER_IP

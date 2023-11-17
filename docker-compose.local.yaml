@@ -17,7 +17,7 @@ services:
     networks:
       - ton-proxy-network
     environment:
-      - TON_PROXY_PORT
+      - TON_PROXY_PORT=
       - TON_PROXY_SERVER_IP
       - TON_PROXY_ADNL_PORT
       - TON_PROXY_REMOTE_ADDR
@@ -35,5 +35,5 @@ secrets:
   global-config:
     file: private/global.config.json
 networks:
-  ton-proxy-network:
+  toncenter-network:
     external: true

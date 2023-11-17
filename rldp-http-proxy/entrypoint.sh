@@ -9,7 +9,19 @@ cat /run/secrets/adnl-private > keyring/$ADNL_HEX
 chmod 600 keyring/$ADNL_HEX
 
 ls -la keyring
-curl http://${TON_PROXY_REMOTE_ADDR} -v
+
+# if specified TON_PROXY_REMOTE_HOST
+if [[ ! -z "$TON_PROXY_REMOTE_HOST" ]]; then
+    resolved=$(dig +short $TON_PROXY_REMOTE_HOST)
+    if [[ ! -z "$resolved" ]]; then
+        echo "Hostname resolved to $resolved"
+        TON_PROXY_REMOTE_HOST=$resolved
+    fi
+    TON_PROXY_REMOTE_ADDR=$TON_PROXY_REMOTE_HOST:$TON_PROXY_REMOTE_PORT
+fi
+
+echo "Remote addr: $TON_PROXY_REMOTE_ADDR"
+curl http://${TON_PROXY_REMOTE_ADDR} -v || echo 'WARNING!'
 printenv
 
 ./rldp-http-proxy -p ${TON_PROXY_PORT:-8080} \
