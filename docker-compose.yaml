@@ -1,4 +1,3 @@
-# This docker-compose file doesn't work yet.
 version: '3.9'
 services:
   rldp-proxy:
@@ -18,6 +17,9 @@ services:
       - TON_PROXY_PROXY_ALL
     command: /app/entrypoint.sh
     secrets: [ adnl, adnl-hex, adnl-private, global-config ]
+    ports:
+      - "8080:8080"
+    restart: always
 secrets:
   adnl:
     file: private/adnl
